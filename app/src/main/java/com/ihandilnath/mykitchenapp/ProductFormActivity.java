@@ -17,7 +17,11 @@ public class ProductFormActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ProductFormViewModel.class);
+
+        if(mViewModel == null){
+            mViewModel = ViewModelProviders.of(this).get(ProductFormViewModel.class);
+        }
+
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_form);
         mDataBinding.setViewmodel(mViewModel);
     }

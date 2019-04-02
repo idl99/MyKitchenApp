@@ -29,6 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
+                    android:text="@{viewmodel.getName}"
                     android:onTextChanged="@{viewmodel::setName}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -44,6 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:text="@{viewmodel.getWeight}"
                     android:onTextChanged="@{viewmodel::setWeight}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -58,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
+                    android:text="@{viewmodel.getPrice}"
                     android:onTextChanged="@{viewmodel::setPrice}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -73,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:maxLines="5"
+                    android:text="@{viewmodel.getDescription}"
                     android:onTextChanged="@{viewmodel::setDescription}"/>
 
             </com.google.android.material.textfield.TextInputLayout>

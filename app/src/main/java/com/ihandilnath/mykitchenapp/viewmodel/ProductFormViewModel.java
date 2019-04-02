@@ -8,45 +8,63 @@ import com.ihandilnath.mykitchenapp.db.Product;
 import com.ihandilnath.mykitchenapp.db.ProductRepository;
 
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
 
 public class ProductFormViewModel extends AndroidViewModel{
 
-    private ProductRepository mRepository;
-    private MutableLiveData<String> mName;
-    private MutableLiveData<Double> mWeight;
-    private MutableLiveData<Double> mPrice;
-    private MutableLiveData<String> mDescription;
+    private ProductRepository repository;
+    private Product product;
 
     public ProductFormViewModel (Application application) {
         super(application);
-        mRepository = new ProductRepository(application);
-        mName = new MutableLiveData<>();
-        mWeight = new MutableLiveData<>();
-        mPrice = new MutableLiveData<>();
-        mDescription = new MutableLiveData<>();
+        repository = new ProductRepository(application);
+        product = new Product("",0,0,"");
+    }
+
+    public String getName(){
+        return product.getName();
+    }
+
+    public String getWeight(){
+        return String.valueOf(product.getWeight());
+    }
+
+    public String getPrice(){
+        return String.valueOf(product.getPrice());
+    }
+
+    public String getDescription(){
+        return product.getDescription();
     }
 
     public void setName(CharSequence s, int start, int before, int count) {
-        mName.postValue(s.toString());
+        product.setName(s.toString());
     }
 
     public void setWeight(CharSequence s, int start, int before, int count){
-        mWeight.postValue(Double.valueOf(s.toString()));
+        String value = s.toString();
+        if(value.equals("")){
+            product.setWeight(0.0);
+        }else{
+            product.setWeight(Double.valueOf(value));
+        }
     }
 
     public void setPrice(CharSequence s, int start, int before, int count){
-        mPrice.postValue(Double.valueOf(s.toString()));
+        String value = s.toString();
+        if(value.equals("")){
+            product.setPrice(0.0);
+        }else{
+            product.setPrice(Double.valueOf(value));
+        }
     }
 
     public void setDescription(CharSequence s, int start, int before, int count){
-        mDescription.postValue(s.toString());
+        product.setDescription(s.toString());
     }
 
     public void submit(View view) {
-        Product product = new Product(mName.getValue(), mWeight.getValue(), mPrice.getValue(), mDescription.getValue());
         Log.i("MY_TAG", product.toString());
-        mRepository.insert(product);
+        repository.insert(product);
     }
 
 }
