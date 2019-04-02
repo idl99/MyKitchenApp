@@ -1,10 +1,11 @@
-package com.ihandilnath.mykitchenapp;
+package com.ihandilnath.mykitchenapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.ihandilnath.mykitchenapp.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void editProduct(View view) {
         Intent intent = new Intent(this, ProductFormActivity.class);
+        intent.putExtra("action", "edit");
         startActivity(intent);
     }
 

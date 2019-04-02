@@ -1,7 +1,8 @@
-package com.ihandilnath.mykitchenapp;
+package com.ihandilnath.mykitchenapp.ui;
 
 import android.os.Bundle;
 
+import com.ihandilnath.mykitchenapp.R;
 import com.ihandilnath.mykitchenapp.databinding.ActivityProductFormBinding;
 import com.ihandilnath.mykitchenapp.viewmodel.ProductFormViewModel;
 
