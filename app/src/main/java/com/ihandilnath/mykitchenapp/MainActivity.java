@@ -1,5 +1,6 @@
 package com.ihandilnath.mykitchenapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,4 +53,35 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void registerProduct(View view) {
+        Intent intent = new Intent(this, ProductFormActivity.class);
+        intent.putExtra("action", "register");
+        startActivity(intent);
+    }
+
+    public void displayProducts(View view) {
+        // todo
+    }
+
+    public void checkAvailability(View view) {
+        //todo
+    }
+
+
+    public void editProduct(View view) {
+        Intent intent = new Intent(this, ProductFormActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void search(View view) {
+        //todo
+    }
+
+
+    public void findRecipes(View view) {
+        //todo
+    }
+
 }
