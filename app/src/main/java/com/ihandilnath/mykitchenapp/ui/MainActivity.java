@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayProducts(View view) {
-        // todo
+        Intent intent = new Intent(this, ProductListActivity.class);
+        startActivity(intent);
     }
 
     public void checkAvailability(View view) {

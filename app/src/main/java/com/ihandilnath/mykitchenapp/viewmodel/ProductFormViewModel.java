@@ -17,7 +17,7 @@ public class ProductFormViewModel extends AndroidViewModel{
     public ProductFormViewModel (Application application) {
         super(application);
         repository = new ProductRepository(application);
-        product = new Product("",0,0,"");
+        product = new Product("",0,0,"", false);
     }
 
     public String getName(){

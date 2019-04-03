@@ -17,12 +17,14 @@ public class Product extends BaseObservable {
     private double weight;
     private double price;
     private String description;
+    private boolean available;
 
-    public Product(String name, double weight, double price, String description) {
+    public Product(String name, double weight, double price, String description, boolean available) {
         setName(name);
         setWeight(weight);
         setPrice(price);
         setDescription(description);
+        setAvailable(available);
     }
 
     @Bindable
@@ -45,6 +47,11 @@ public class Product extends BaseObservable {
         return description;
     }
 
+    @Bindable
+    public boolean isAvailable() {
+        return available;
+    }
+
     public void setName(String name) {
         this.name = name;
         notifyPropertyChanged(BR.name);
@@ -63,6 +70,10 @@ public class Product extends BaseObservable {
     public void setDescription(String description) {
         this.description = description;
         notifyPropertyChanged(BR.description);
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     @Override
