@@ -2,6 +2,8 @@ package com.ihandilnath.mykitchenapp.db;
 
 import com.ihandilnath.mykitchenapp.BR;
 
+import java.io.Serializable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.BaseObservable;
@@ -10,7 +12,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "product_table")
-public class Product extends BaseObservable {
+public class Product extends BaseObservable implements Serializable {
+
+    // Implements Serializable so Product can be passed as an intent extra among activities
 
     @PrimaryKey
     @NonNull
