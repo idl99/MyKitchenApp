@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.ihandilnath.mykitchenapp.R;
 import com.ihandilnath.mykitchenapp.db.Product;
@@ -16,6 +17,9 @@ import com.ihandilnath.mykitchenapp.viewmodel.ProductListViewModel;
 
 import java.util.Iterator;
 import java.util.List;
+
+import static com.ihandilnath.mykitchenapp.ui.ProductAction.ADD_TO_KITCHEN;
+import static com.ihandilnath.mykitchenapp.ui.ProductAction.LIST_PRODUCTS;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -38,26 +42,46 @@ public class ProductListActivity extends AppCompatActivity {
             viewmodel = ViewModelProviders.of(this).get(ProductListViewModel.class);
         }
 
-        if(getIntent().getExtras().getBoolean("filterAvailable")){
-            viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
-                @Override
-                public void onChanged(List<Product> products) {
-                    for(Iterator it = products.iterator(); it.hasNext();){
-                        Product product = ((Product) it.next());
-                        if(!product.isAvailable()){
-                            it.remove();
-                        }
+        switch ((ProductAction)getIntent().getExtras().get("action")){
+
+            case ADD_TO_KITCHEN:
+                viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
+                    @Override
+                    public void onChanged(List<Product> products) {
+                        recyclerView.setAdapter(new ProductAdapter(products, ADD_TO_KITCHEN));
                     }
-                    recyclerView.setAdapter(new ProductAdapter(products, ProductAction.EDIT_AVAILABILITY));
-                }
-            });
-        } else{
-            viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
-                @Override
-                public void onChanged(List<Product> products) {
-                    recyclerView.setAdapter(new ProductAdapter(products, ProductAction.ADD_TO_KITCHEN));
-                }
-            });
+                });
+                break;
+
+            case EDIT_AVAILABILITY:
+                viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
+                    @Override
+                    public void onChanged(List<Product> products) {
+                        for(Iterator it = products.iterator(); it.hasNext();){
+                            Product product = ((Product) it.next());
+                            if(!product.isAvailable()){
+                                it.remove();
+                            }
+                        }
+                        recyclerView.setAdapter(new ProductAdapter(products, ProductAction.EDIT_AVAILABILITY));
+                    }
+                });
+                break;
+
+            case LIST_PRODUCTS:
+
+                Button button = findViewById(R.id.productlist_add);
+                button.setEnabled(false);
+                button.setVisibility(View.INVISIBLE);
+
+                viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
+                    @Override
+                    public void onChanged(final List<Product> products) {
+                        recyclerView.setAdapter(new ProductAdapter(products, LIST_PRODUCTS));
+                    }
+                });
+                break;
+
         }
 
     }

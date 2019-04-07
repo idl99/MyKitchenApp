@@ -1,5 +1,7 @@
 package com.ihandilnath.mykitchenapp.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,29 +34,50 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ProductViewHolder holder, final int position) {
+
         final Product product = products.get(position);
-
         holder.ctv.setText(product.getName());
-        if(product.isAvailable()){
-            holder.ctv.setChecked(true);
-            if(action == ProductAction.ADD_TO_KITCHEN){
-                holder.ctv.setEnabled(false);
-            }
-        }
 
-        holder.ctv.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                CheckedTextView ctv = ((CheckedTextView) v);
-                ctv.toggle();
-                if(ctv.isChecked()){
-                    product.setAvailable(true);
-                }else{
-                    product.setAvailable(false);
+        switch (action){
+
+            case LIST_PRODUCTS:
+                holder.ctv.setCheckMarkDrawable(null);
+                holder.ctv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Context context = view.getContext();
+                        Intent intent = new Intent(context, ProductFormActivity.class);
+                        intent.putExtra("product", products.get(position));
+                        context.startActivity(intent);
+                    }
+                });
+                break;
+
+            default:
+                holder.ctv.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v)
+                    {
+                        CheckedTextView ctv = ((CheckedTextView) v);
+                        ctv.toggle();
+                        if(ctv.isChecked()){
+                            product.setAvailable(true);
+                        }else{
+                            product.setAvailable(false);
+                        }
+                    }
+                });
+
+                if(product.isAvailable()){
+                    holder.ctv.setChecked(true);
+                    if(action == ProductAction.ADD_TO_KITCHEN){
+                        holder.ctv.setEnabled(false);
+                    }
                 }
-            }
-        });
+
+                break;
+
+        }
     }
 
     @Override
