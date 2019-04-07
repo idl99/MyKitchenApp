@@ -20,6 +20,10 @@ public class ProductFormViewModel extends AndroidViewModel{
         product = new Product("",0,0,"", false);
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
     public String getName(){
         return product.getName();
     }
@@ -34,6 +38,10 @@ public class ProductFormViewModel extends AndroidViewModel{
 
     public String getDescription(){
         return product.getDescription();
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void setName(CharSequence s, int start, int before, int count) {
@@ -63,7 +71,6 @@ public class ProductFormViewModel extends AndroidViewModel{
     }
 
     public void submit(View view) {
-        Log.i("MY_TAG", product.toString());
         repository.insert(product);
     }
 
