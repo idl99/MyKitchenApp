@@ -48,19 +48,17 @@ public class ProductListActivity extends AppCompatActivity {
                             it.remove();
                         }
                     }
-                    recyclerView.setAdapter(new ProductAdapter(products, viewmodel.getSelected()));
+                    recyclerView.setAdapter(new ProductAdapter(products, ProductAction.EDIT_AVAILABILITY));
                 }
             });
         } else{
             viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
                 @Override
                 public void onChanged(List<Product> products) {
-                    recyclerView.setAdapter(new ProductAdapter(products, viewmodel.getSelected()));
+                    recyclerView.setAdapter(new ProductAdapter(products, ProductAction.ADD_TO_KITCHEN));
                 }
             });
         }
-
-
 
     }
 

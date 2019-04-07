@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> products;
-    private List<Product> checked;
+    private ProductAction action;
 
-    public ProductAdapter(List<Product> products, List<Product> checked) {
+    public ProductAdapter(List<Product> products, ProductAction action) {
         this.products = products;
-        this.checked = checked;
+        this.action = action;
     }
 
     @NonNull
@@ -33,12 +33,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, final int position) {
+        final Product product = products.get(position);
 
-        holder.ctv.setText(products.get(position).getName());
-        final Product currentProduct = products.get(position);
-
-        if(checked.contains(currentProduct)){
+        holder.ctv.setText(product.getName());
+        if(product.isAvailable()){
             holder.ctv.setChecked(true);
+            if(action == ProductAction.ADD_TO_KITCHEN){
+                holder.ctv.setEnabled(false);
+            }
         }
 
         holder.ctv.setOnClickListener(new View.OnClickListener() {
@@ -47,9 +49,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 CheckedTextView ctv = ((CheckedTextView) v);
                 ctv.toggle();
                 if(ctv.isChecked()){
-                    checked.add(products.get(position));
+                    product.setAvailable(true);
                 }else{
-                    checked.remove(products.get(position));
+                    product.setAvailable(false);
                 }
             }
         });
