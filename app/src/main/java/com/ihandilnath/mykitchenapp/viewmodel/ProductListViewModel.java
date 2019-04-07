@@ -27,19 +27,21 @@ public class ProductListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Product>> getProducts() {
-        return products;
+        return this.products;
     }
 
     public List<Product> getSelected() {
         return selected;
     }
 
-    public void addCheckedItem(Product product){
-        selected.add(product);
+    public void save(){
+        for(Product product: products.getValue()){
+            if(selected.contains(product)){
+                product.setAvailable(true);
+            }else{
+                product.setAvailable(false);
+            }
+            repository.update(product);
+        }
     }
-
-    public void removeCheckedItem(Product product){
-        selected.remove(product);
-    }
-
 }

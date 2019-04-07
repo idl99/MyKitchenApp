@@ -15,13 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> products;
-    private List<Product> selected;
-    private OnProductCheckListener onProductCheckListener;
+    private List<Product> checked;
 
-    public ProductAdapter(List<Product> products, List<Product> selected, OnProductCheckListener onProductCheckListener ) {
+    public ProductAdapter(List<Product> products, List<Product> checked) {
         this.products = products;
-        this.selected = selected;
-        this.onProductCheckListener = onProductCheckListener;
+        this.checked = checked;
     }
 
     @NonNull
@@ -34,12 +32,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductViewHolder holder, final int position) {
 
         holder.ctv.setText(products.get(position).getName());
         final Product currentProduct = products.get(position);
 
-        if(selected.contains(currentProduct)){
+        if(checked.contains(currentProduct)){
             holder.ctv.setChecked(true);
         }
 
@@ -49,9 +47,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 CheckedTextView ctv = ((CheckedTextView) v);
                 ctv.toggle();
                 if(ctv.isChecked()){
-                    onProductCheckListener.onProductCheck(currentProduct);
+                    checked.add(products.get(position));
                 }else{
-                    onProductCheckListener.onProductUncheck(currentProduct);
+                    checked.remove(products.get(position));
                 }
             }
         });
@@ -71,11 +69,4 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
     }
 
-    public interface OnProductCheckListener {
-
-        void onProductCheck(Product product);
-
-        void onProductUncheck(Product product);
-
-    }
 }
