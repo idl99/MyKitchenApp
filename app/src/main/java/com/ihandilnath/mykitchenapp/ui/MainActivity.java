@@ -63,11 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayProducts(View view) {
         Intent intent = new Intent(this, ProductListActivity.class);
+        intent.putExtra("filterAvailable", false);
         startActivity(intent);
     }
 
     public void checkAvailability(View view) {
-        //todo
+        Intent intent = new Intent(this, ProductListActivity.class);
+        intent.putExtra("filterAvailable", true);
+        startActivity(intent);
     }
 
 
