@@ -3,6 +3,7 @@ package com.ihandilnath.mykitchenapp.db;
 import com.ihandilnath.mykitchenapp.BR;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.room.Entity;
@@ -25,6 +26,21 @@ public class Product extends BaseObservable {
         setPrice(price);
         setDescription(description);
         setAvailable(available);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", weight=" + weight +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return this.name.equals(((Product) obj).getName());
     }
 
     @Bindable
@@ -74,16 +90,6 @@ public class Product extends BaseObservable {
 
     public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", weight=" + weight +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                '}';
     }
 
 }
