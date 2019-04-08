@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void editProduct(View view) {
         Intent intent = new Intent(this, ProductListActivity.class);
-        intent.putExtra("action", ProductAction.LIST_PRODUCTS);
+        intent.putExtra("action", ProductAction.EDIT_PRODUCT);
         startActivity(intent);
     }
 
@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void findRecipes(View view) {
-        //todo
+        Intent intent = new Intent(this, ProductListActivity.class);
+        intent.putExtra("action", ProductAction.FIND_RECIPES);
+        startActivity(intent);
     }
 
 }
