@@ -21,6 +21,8 @@ import com.ihandilnath.mykitchenapp.R;
 import com.ihandilnath.mykitchenapp.model.Product;
 import com.ihandilnath.mykitchenapp.viewmodel.ProductListViewModel;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -107,12 +109,20 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     public void findRecipes(){
-        // code to find recipes
+        ArrayList<String> productNames = new ArrayList<>();
+        for(Iterator it = ((CheckedProductAdapter) listView.getAdapter()).getCheckedProducts().iterator();
+            it.hasNext();){
+            Product product = ((Product) it.next());
+            productNames.add(product.getName());
+        }
+        Intent intent = new Intent(this, RecipeListActivity.class);
+        intent.putStringArrayListExtra("productNames", productNames);
+        startActivity(intent);
     }
 
     private class SimpleProductAdapter extends BaseAdapter{
 
-        private List<Product> products;
+        protected List<Product> products;
 
         public SimpleProductAdapter(List<Product> products) {
             super();
@@ -185,6 +195,15 @@ public class ProductListActivity extends AppCompatActivity {
             for(int i=0; i<getCount(); i++){
                 listView.setItemChecked(i, false);
             }
+        }
+
+        public List<Product> getCheckedProducts(){
+            List<Product> checkedProducts = new ArrayList<>();
+            for(int i=0; i<getCount(); i++){
+                if(((CheckedTextView) listView.getChildAt(i)).isChecked())
+                    checkedProducts.add(products.get(i));
+            }
+            return checkedProducts;
         }
 
     }

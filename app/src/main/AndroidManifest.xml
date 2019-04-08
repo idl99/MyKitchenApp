@@ -12,9 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.RecipeListActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity
             android:name=".ui.ProductListActivity"
-            android:configChanges="orientation|screenSize">
-        </activity>
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".ui.ProductFormActivity"
             android:configChanges="orientation|screenSize"
