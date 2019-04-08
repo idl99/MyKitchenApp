@@ -105,7 +105,8 @@ public class RecipeListActivity extends AppCompatActivity {
         if(recipes.size() == 0){
             AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle("No recipes found")
-                    .setMessage("Please try selecting other products")
+                    .setMessage("No recipes available containing these ingredients, try different\n" +
+                            "ingredients")
                     .setNeutralButton("Go back", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
