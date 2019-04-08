@@ -18,9 +18,6 @@ import com.ihandilnath.mykitchenapp.viewmodel.ProductListViewModel;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.ihandilnath.mykitchenapp.ui.ProductAction.ADD_TO_KITCHEN;
-import static com.ihandilnath.mykitchenapp.ui.ProductAction.LIST_PRODUCTS;
-
 public class ProductListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -48,7 +45,7 @@ public class ProductListActivity extends AppCompatActivity {
                 viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
                     @Override
                     public void onChanged(List<Product> products) {
-                        recyclerView.setAdapter(new ProductAdapter(products, ADD_TO_KITCHEN));
+                        recyclerView.setAdapter(new ProductAdapter(products, ProductAction.ADD_TO_KITCHEN));
                     }
                 });
                 break;
@@ -68,16 +65,16 @@ public class ProductListActivity extends AppCompatActivity {
                 });
                 break;
 
-            case LIST_PRODUCTS:
+            case EDIT_PRODUCT:
 
-                Button button = findViewById(R.id.productlist_add);
+                Button button = findViewById(R.id.productlist_action);
                 button.setEnabled(false);
                 button.setVisibility(View.INVISIBLE);
 
                 viewmodel.getProducts().observe(this, new Observer<List<Product>>() {
                     @Override
                     public void onChanged(final List<Product> products) {
-                        recyclerView.setAdapter(new ProductAdapter(products, LIST_PRODUCTS));
+                        recyclerView.setAdapter(new ProductAdapter(products, ProductAction.EDIT_PRODUCT));
                     }
                 });
                 break;

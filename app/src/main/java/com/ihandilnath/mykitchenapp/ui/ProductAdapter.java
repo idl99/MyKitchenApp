@@ -41,7 +41,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         switch (action){
 
-            case LIST_PRODUCTS:
+            case EDIT_PRODUCT:
                 holder.ctv.setCheckMarkDrawable(null);
                 holder.ctv.setOnClickListener(new View.OnClickListener() {
                     @Override
