@@ -7,17 +7,17 @@
     android:orientation="vertical"
     tools:context=".ui.ProductListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/productlist_recycler_view"
+    <ListView
+        android:id="@+id/productlist_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/productlist_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add to Kitchen"
-        android:onClick="submit"/>
+        android:onClick="saveToDb"/>
 
 </LinearLayout>

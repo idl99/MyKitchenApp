@@ -1,4 +1,4 @@
-package com.ihandilnath.mykitchenapp.db;
+package com.ihandilnath.mykitchenapp.model;
 
 import com.ihandilnath.mykitchenapp.BR;
 

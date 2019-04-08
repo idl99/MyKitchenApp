@@ -2,6 +2,8 @@ package com.ihandilnath.mykitchenapp.db;
 
 import android.content.Context;
 
+import com.ihandilnath.mykitchenapp.model.Product;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;

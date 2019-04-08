@@ -1,10 +1,9 @@
 package com.ihandilnath.mykitchenapp.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 import android.view.View;
 
-import com.ihandilnath.mykitchenapp.db.Product;
+import com.ihandilnath.mykitchenapp.model.Product;
 import com.ihandilnath.mykitchenapp.db.ProductRepository;
 
 import androidx.lifecycle.AndroidViewModel;

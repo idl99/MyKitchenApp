@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ihandilnath.mykitchenapp.R;
 import com.ihandilnath.mykitchenapp.databinding.ActivityProductFormBinding;
-import com.ihandilnath.mykitchenapp.db.Product;
+import com.ihandilnath.mykitchenapp.model.Product;
 import com.ihandilnath.mykitchenapp.viewmodel.ProductFormViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;

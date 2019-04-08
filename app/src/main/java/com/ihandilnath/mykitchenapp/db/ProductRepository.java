@@ -3,6 +3,8 @@ package com.ihandilnath.mykitchenapp.db;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.ihandilnath.mykitchenapp.model.Product;
+
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -20,6 +22,10 @@ public class ProductRepository {
 
     public LiveData<List<Product>> getAllProducts() {
         return mProducts;
+    }
+
+    public LiveData<List<Product>> getAvailableProducts(){
+        return mProductDao.getAvailableProducts();
     }
 
     public void insert (Product product) {

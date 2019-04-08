@@ -2,10 +2,9 @@ package com.ihandilnath.mykitchenapp.viewmodel;
 
 import android.app.Application;
 
-import com.ihandilnath.mykitchenapp.db.Product;
+import com.ihandilnath.mykitchenapp.model.Product;
 import com.ihandilnath.mykitchenapp.db.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -28,9 +27,15 @@ public class ProductListViewModel extends AndroidViewModel {
         return this.products;
     }
 
+    public LiveData<List<Product>> getAvailableProducts(){
+        this.products = repository.getAvailableProducts();
+        return this.products;
+    }
+
     public void save(){
         for(Product product: products.getValue()){
             repository.update(product);
         }
     }
+
 }

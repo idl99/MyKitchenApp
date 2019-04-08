@@ -1,5 +1,7 @@
 package com.ihandilnath.mykitchenapp.db;
 
+import com.ihandilnath.mykitchenapp.model.Product;
+
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -14,6 +16,9 @@ public interface ProductDao {
 
     @Query("SELECT * from product_table ORDER BY name ASC")
     LiveData<List<Product>> getAllProducts();
+
+    @Query("SELECT * from product_table WHERE available = 1 ORDER BY name ASC")
+    LiveData<List<Product>> getAvailableProducts();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Product product);

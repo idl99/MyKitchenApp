@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 
-import com.ihandilnath.mykitchenapp.db.Product;
+import com.ihandilnath.mykitchenapp.model.Product;
 
 import java.util.List;
 
