@@ -86,6 +86,7 @@ public class ProductListActivity extends AppCompatActivity {
                                 intent.putExtra("action", ProductAction.EDIT_PRODUCT);
                                 intent.putExtra("product", products.get(i));
                                 startActivity(intent);
+                                finish();
                             }
                         });
                         break;
