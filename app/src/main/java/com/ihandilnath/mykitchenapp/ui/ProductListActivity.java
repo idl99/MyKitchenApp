@@ -62,12 +62,12 @@ public class ProductListActivity extends AppCompatActivity {
                 switch (((ProductAction) getIntent().getExtras().get("action"))){
 
                     case ADD_TO_KITCHEN:
-                        listView.setAdapter(new CheckedProductAdapter(products));
+                        listView.setAdapter(new CheckedProductAdapter(products,true));
                         break;
 
                     case EDIT_AVAILABILITY:
                         button.setText("Save");
-                        listView.setAdapter(new CheckedProductAdapter(products));
+                        listView.setAdapter(new CheckedProductAdapter(products, false));
                         break;
 
                     case EDIT_PRODUCT:
@@ -91,7 +91,7 @@ public class ProductListActivity extends AppCompatActivity {
                                 ProductListActivity.this.findRecipes();
                             }
                         });
-                        listView.setAdapter(new CheckedProductAdapter(products));
+                        listView.setAdapter(new CheckedProductAdapter(products, false));
                         ((CheckedProductAdapter) listView.getAdapter()).uncheckAll();
                         break;
 
@@ -160,8 +160,11 @@ public class ProductListActivity extends AppCompatActivity {
 
     private class CheckedProductAdapter extends SimpleProductAdapter{
 
-        public CheckedProductAdapter(List<Product> products) {
+        private boolean disableCheckedItems;
+
+        public CheckedProductAdapter(List<Product> products, boolean disableCheckedItems) {
             super(products);
+            this.disableCheckedItems = disableCheckedItems;
         }
 
         @Override
@@ -173,28 +176,23 @@ public class ProductListActivity extends AppCompatActivity {
             }
 
             final Product product = ((Product)getItem(i));
-            final CheckedTextView ctv = view.findViewById(android.R.id.text1);
+            final CheckedTextView ctv = ((CheckedTextView) view);
             ctv.setText(product.getName());
             ctv.setChecked(product.isAvailable());
 
-            ctv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ctv.toggle();
-                    product.setAvailable(ctv.isChecked());
-                }
-            });
+            if(disableCheckedItems && ctv.isChecked()){
+                ctv.setClickable(false);
+            }else{
+                ctv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ctv.toggle();
+                        product.setAvailable(ctv.isChecked());
+                    }
+                });
+            }
 
             return view;
-        }
-
-        public void uncheckAll() {
-            if(listView.getChoiceMode() != AbsListView.CHOICE_MODE_MULTIPLE){
-                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-            }
-            for(int i=0; i<getCount(); i++){
-                listView.setItemChecked(i, false);
-            }
         }
 
         public List<Product> getCheckedProducts(){
@@ -204,6 +202,15 @@ public class ProductListActivity extends AppCompatActivity {
                     checkedProducts.add(products.get(i));
             }
             return checkedProducts;
+        }
+
+        public void uncheckAll() {
+            if(listView.getChoiceMode() != AbsListView.CHOICE_MODE_MULTIPLE){
+                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+            }
+            for(int i=0; i<getCount(); i++){
+                listView.setItemChecked(i, false);
+            }
         }
 
     }
