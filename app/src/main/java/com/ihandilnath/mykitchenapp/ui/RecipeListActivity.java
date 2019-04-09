@@ -3,12 +3,14 @@ package com.ihandilnath.mykitchenapp.ui;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,8 +47,34 @@ public class RecipeListActivity extends AppCompatActivity {
         listView = findViewById(R.id.recipelist_list_view);
 
         List<String> products = getIntent().getExtras().getStringArrayList("productNames");
-        initializeView(products);
 
+        if(isConnectedToInternet()){
+            initializeView(products);
+        }else{
+            new AlertDialog.Builder(this)
+                    .setTitle("No Internet Connectivity")
+                    .setMessage("Please connect to a WiFi or Mobile Data network and try again")
+                    .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+    }
+
+    private boolean isConnectedToInternet(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
     public void initializeView(List<String> products){
@@ -103,11 +130,11 @@ public class RecipeListActivity extends AppCompatActivity {
 
     public void populateRecipeList(final List<Recipe> recipes){
         if(recipes.size() == 0){
-            AlertDialog alertDialog = new AlertDialog.Builder(this)
+            new AlertDialog.Builder(this)
                     .setTitle("No recipes found")
                     .setMessage("No recipes available containing these ingredients, try different\n" +
                             "ingredients")
-                    .setNeutralButton("Go back", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Go back", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             finish();
