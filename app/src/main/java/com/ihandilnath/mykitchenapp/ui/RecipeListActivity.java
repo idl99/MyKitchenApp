@@ -34,6 +34,10 @@ import java.util.List;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Activity which provides user with an interface to view list of recipes fetched from Food2Fork API
+ * and navigate to browser to view recipe.
+ */
 public class RecipeListActivity extends AppCompatActivity {
 
     private ListView listView;
@@ -48,8 +52,9 @@ public class RecipeListActivity extends AppCompatActivity {
         List<String> products = getIntent().getExtras().getStringArrayList("productNames");
 
         if (isConnectedToInternet()) {
-            initializeView(products);
+            callFood2ForkService(products);
         } else {
+            // Not connected to internet, show alert dialog to user
             new AlertDialog.Builder(this)
                     .setTitle("No Internet Connectivity")
                     .setMessage("Please connect to a WiFi or Mobile Data network and try again")
@@ -71,12 +76,20 @@ public class RecipeListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method to check internet connectivity
+     * @return true if connected to internet, false otherwise.
+     */
     private boolean isConnectedToInternet() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 
-    private void initializeView(List<String> products) {
+    /**
+     * Method which initializes view
+     * @param products
+     */
+    private void callFood2ForkService(List<String> products) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         Uri uri = new Uri.Builder().scheme("https")
@@ -109,6 +122,11 @@ public class RecipeListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method which parses response returned by Food2Fork API as list of Recipe objects
+     * @param response response returned by Food2Fork API
+     * @return list of Recipe objects
+     */
     private List<Recipe> parseResponseAsRecipes(JSONObject response) {
         final List<Recipe> recipes = new ArrayList<>();
         try {
@@ -125,8 +143,13 @@ public class RecipeListActivity extends AppCompatActivity {
         return recipes;
     }
 
+    /**
+     * Method which populates the recipe list with recipes fetched from the Food2Fork API
+     * @param recipes
+     */
     private void populateRecipeList(final List<Recipe> recipes) {
         if (recipes.size() == 0) {
+            // No recipes found on Food2Fork for list of products selected by user
             new AlertDialog.Builder(this)
                     .setTitle("No recipes found")
                     .setMessage("No recipes available containing these ingredients, try different\n" +
@@ -143,6 +166,7 @@ public class RecipeListActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    // Intent to visit source webpage of recipe on device web browser
                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(recipes.get(i).getUrl()));
                     startActivity(intent);
                 }

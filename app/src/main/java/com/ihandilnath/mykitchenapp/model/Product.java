@@ -11,10 +11,12 @@ import androidx.databinding.Bindable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Model class used to model and represent Product objects
+ * Implements Serializable so Product can be passed as an intent extra among activities
+ */
 @Entity(tableName = "product_table")
 public class Product extends BaseObservable implements Serializable {
-
-    // Implements Serializable so Product can be passed as an intent extra among activities
 
     @PrimaryKey
     @NonNull
@@ -52,19 +54,9 @@ public class Product extends BaseObservable implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        notifyPropertyChanged(BR.name);
-    }
-
     @Bindable
     public double getWeight() {
         return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-        notifyPropertyChanged(BR.weight);
     }
 
     @Bindable
@@ -72,23 +64,33 @@ public class Product extends BaseObservable implements Serializable {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-        notifyPropertyChanged(BR.price);
-    }
-
     @Bindable
     public String getDescription() {
         return description;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+        notifyPropertyChanged(BR.weight);
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+        notifyPropertyChanged(BR.price);
+    }
+
     public void setDescription(String description) {
         this.description = description;
         notifyPropertyChanged(BR.description);
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 
     public void setAvailable(boolean available) {

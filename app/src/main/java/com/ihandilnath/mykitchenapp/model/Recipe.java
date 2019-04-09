@@ -10,6 +10,11 @@ public class Recipe {
         this.url = url;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public String getName() {
         return name;
     }
@@ -25,9 +30,5 @@ public class Recipe {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    @Override
-    public String toString() {
-        return name;
-    }
+    
 }

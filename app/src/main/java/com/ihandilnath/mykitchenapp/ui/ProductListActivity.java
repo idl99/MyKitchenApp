@@ -18,7 +18,6 @@ import com.ihandilnath.mykitchenapp.model.Product;
 import com.ihandilnath.mykitchenapp.viewmodel.ProductListViewModel;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,58 +27,69 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 
+/**
+ * Activity which provides an interface for user to view a list of products and interact with it
+ * before performing a batch operation on several products
+ */
 public class ProductListActivity extends AppCompatActivity {
 
-    private ProductAction action;
-    private ProductListViewModel viewmodel;
-    private ListView listView;
+    private ProductAction mAction;
+    private ProductListViewModel mViewModel;
+    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
 
-        action = ((ProductAction) getIntent().getExtras().get("action"));
+        mAction = ((ProductAction) getIntent().getExtras().get("action")); // Getting the action
+                                                // which the user intends to perform on the product
+                                                // in this activity
 
-        if (viewmodel == null) {
-            viewmodel = ViewModelProviders.of(this).get(ProductListViewModel.class);
+        if (mViewModel == null) {
+            mViewModel = ViewModelProviders.of(this).get(ProductListViewModel.class);
         }
 
-        listView = findViewById(R.id.productlist_list_view);
+        mListView = findViewById(R.id.productlist_list_view);
 
+        // Fetching required data from database
         LiveData<List<Product>> data;
-        switch (action) {
+        switch (mAction) {
             case EDIT_AVAILABILITY:
             case FIND_RECIPES:
-                data = viewmodel.getAvailableProducts();
+                data = mViewModel.getAvailableProducts();
                 break;
 
             default:
-                data = viewmodel.getProducts();
+                data = mViewModel.getProducts();
                 break;
         }
 
+        // Initializing list adapter with fetched data and other view initializations
         final Button button = findViewById(R.id.productlist_action);
         data.observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(final List<Product> products) {
 
-                switch (action) {
+                switch (mAction) {
 
                     case ADD_TO_KITCHEN:
-                        listView.setAdapter(new CheckedProductAdapter(products, true));
+                        mListView.setAdapter(new CheckedProductAdapter(products, true));
                         break;
 
                     case EDIT_AVAILABILITY:
                         button.setText("Save");
-
-                        listView.setAdapter(new CheckedProductAdapter(products, false));
+                        mListView.setAdapter(new CheckedProductAdapter(products, false));
                         break;
 
                     case EDIT_PRODUCT:
+                        // Removing action button
                         ((ViewGroup) (button.getParent())).removeView(button);
-                        listView.setAdapter(new SimpleProductAdapter(products));
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        mListView.setAdapter(new SimpleProductAdapter(products));
+
+                        // When user clicks on a product, start ProductFormActivity to edit details of the product
+                        // passed as an extra to the ProductFormActivity.
+                        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                 Intent intent = new Intent(ProductListActivity.this, ProductFormActivity.class);
@@ -99,8 +109,8 @@ public class ProductListActivity extends AppCompatActivity {
                                 ProductListActivity.this.findRecipes();
                             }
                         });
-                        listView.setAdapter(new CheckedProductAdapter(products, false));
-                        ((CheckedProductAdapter) listView.getAdapter()).uncheckAll();
+                        mListView.setAdapter(new CheckedProductAdapter(products, false));
+                        ((CheckedProductAdapter) mListView.getAdapter()).uncheckAll();
                         break;
 
                 }
@@ -111,8 +121,11 @@ public class ProductListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method called when user has performed an action. Displays an alert dialog to user indicating
+     * completion or success of operation.
+     */
     private void onListAction() {
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -121,7 +134,7 @@ public class ProductListActivity extends AppCompatActivity {
                     }
                 });
 
-        switch (action) {
+        switch (mAction) {
 
             case ADD_TO_KITCHEN:
                 alertDialogBuilder.setTitle("Added Items to Kitchen")
@@ -140,13 +153,17 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     public void saveToDb(View view) {
-        viewmodel.save();
+        mViewModel.save();
         onListAction();
     }
 
+    /**
+     * Method which begins the RecipeListActivity by sending list of names of products for which the
+     * user wishes to find recipes.
+     */
     private void findRecipes() {
         ArrayList<String> productNames = new ArrayList<>();
-        for (Product product : ((CheckedProductAdapter) listView.getAdapter()).getCheckedProducts()) {
+        for (Product product : ((CheckedProductAdapter) mListView.getAdapter()).getCheckedProducts()) {
             productNames.add(product.getName());
         }
         Intent intent = new Intent(this, RecipeListActivity.class);
@@ -154,6 +171,9 @@ public class ProductListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Custom adapter class to show simple list of Products
+     */
     private class SimpleProductAdapter extends BaseAdapter {
 
         final List<Product> products;
@@ -192,6 +212,9 @@ public class ProductListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Custom adapter class to show a list of Products with checkbox actions
+     */
     private class CheckedProductAdapter extends SimpleProductAdapter {
 
         private final boolean disableCheckedItems;
@@ -215,6 +238,7 @@ public class ProductListActivity extends AppCompatActivity {
             ctv.setChecked(product.isAvailable());
 
             if (disableCheckedItems && ctv.isChecked()) {
+                // Item is available and the availability shouldn't be modified
                 ctv.setClickable(false);
             } else {
                 ctv.setOnClickListener(new View.OnClickListener() {
@@ -229,21 +253,28 @@ public class ProductListActivity extends AppCompatActivity {
             return view;
         }
 
+        /**
+         * Method which returns the list of Products checked by the users
+         * @return list of Products checked by the users
+         */
         List<Product> getCheckedProducts() {
             List<Product> checkedProducts = new ArrayList<>();
             for (int i = 0; i < getCount(); i++) {
-                if (((CheckedTextView) listView.getChildAt(i)).isChecked())
+                if (((CheckedTextView) mListView.getChildAt(i)).isChecked())
                     checkedProducts.add(products.get(i));
             }
             return checkedProducts;
         }
 
+        /**
+         * Uncheck all checked boxes in the list view
+         */
         void uncheckAll() {
-            if (listView.getChoiceMode() != AbsListView.CHOICE_MODE_MULTIPLE) {
-                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+            if (mListView.getChoiceMode() != AbsListView.CHOICE_MODE_MULTIPLE) {
+                mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
             }
             for (int i = 0; i < getCount(); i++) {
-                listView.setItemChecked(i, false);
+                mListView.setItemChecked(i, false);
             }
         }
 

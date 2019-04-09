@@ -11,30 +11,32 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-
+/**
+ * ViewModel class which stores state of the ProductListActivity
+ */
 public class ProductListViewModel extends AndroidViewModel {
 
-    private final ProductRepository repository;
-    private LiveData<List<Product>> products;
+    private final ProductRepository mRepository;
+    private LiveData<List<Product>> mProducts; // List of products that can be observed and used by activity
 
     public ProductListViewModel(@NonNull Application application) {
         super(application);
-        this.repository = new ProductRepository(application);
-        this.products = repository.getAllProducts();
+        this.mRepository = new ProductRepository(application);
+        this.mProducts = mRepository.getAllProducts();
     }
 
     public LiveData<List<Product>> getProducts() {
-        return this.products;
+        return this.mProducts;
     }
 
     public LiveData<List<Product>> getAvailableProducts() {
-        this.products = repository.getAvailableProducts();
-        return this.products;
+        this.mProducts = mRepository.getAvailableProducts();
+        return this.mProducts;
     }
 
     public void save() {
-        for (Product product : products.getValue()) {
-            repository.update(product);
+        for (Product product : mProducts.getValue()) {
+            mRepository.update(product);
         }
     }
 
