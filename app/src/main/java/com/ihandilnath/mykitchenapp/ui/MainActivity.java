@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void search(View view) {
-        //todo
+        Intent intent = new Intent(this, ProductSearchActivity.class);
+        startActivity(intent);
     }
 
 
