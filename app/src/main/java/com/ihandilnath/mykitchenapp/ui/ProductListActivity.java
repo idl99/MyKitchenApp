@@ -1,10 +1,12 @@
 package com.ihandilnath.mykitchenapp.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,13 +30,16 @@ import java.util.List;
 
 public class ProductListActivity extends AppCompatActivity {
 
-    private ListView listView;
+    private ProductAction action;
     private ProductListViewModel viewmodel;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
+
+        action = ((ProductAction) getIntent().getExtras().get("action"));
 
         if (viewmodel == null) {
             viewmodel = ViewModelProviders.of(this).get(ProductListViewModel.class);
@@ -43,7 +48,7 @@ public class ProductListActivity extends AppCompatActivity {
         listView = findViewById(R.id.productlist_list_view);
 
         LiveData<List<Product>> data;
-        switch (((ProductAction) getIntent().getExtras().get("action"))){
+        switch (action){
             case EDIT_AVAILABILITY:
             case FIND_RECIPES:
                 data = viewmodel.getAvailableProducts();
@@ -59,7 +64,7 @@ public class ProductListActivity extends AppCompatActivity {
             @Override
             public void onChanged(final List<Product> products) {
 
-                switch (((ProductAction) getIntent().getExtras().get("action"))){
+                switch (action){
 
                     case ADD_TO_KITCHEN:
                         listView.setAdapter(new CheckedProductAdapter(products,true));
@@ -67,6 +72,7 @@ public class ProductListActivity extends AppCompatActivity {
 
                     case EDIT_AVAILABILITY:
                         button.setText("Save");
+
                         listView.setAdapter(new CheckedProductAdapter(products, false));
                         break;
 
@@ -77,6 +83,7 @@ public class ProductListActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                 Intent intent = new Intent(ProductListActivity.this, ProductFormActivity.class);
+                                intent.putExtra("action", ProductAction.EDIT_PRODUCT);
                                 intent.putExtra("product", products.get(i));
                                 startActivity(intent);
                             }
@@ -103,9 +110,37 @@ public class ProductListActivity extends AppCompatActivity {
 
     }
 
+    private void onListAction() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ProductListActivity.this.finish();
+                    }
+                });
+
+        switch (action){
+
+            case ADD_TO_KITCHEN:
+                alertDialogBuilder.setTitle("Added Items to Kitchen")
+                        .setMessage("Added items to kitchen");
+                break;
+
+            case EDIT_AVAILABILITY:
+                alertDialogBuilder.setTitle("Saved Availability")
+                        .setMessage("Saved availability of products in database.");
+                break;
+
+        }
+
+        alertDialogBuilder.show();
+
+    }
+
     public void saveToDb(View view) {
         viewmodel.save();
-        finish();
+        onListAction();
     }
 
     public void findRecipes(){
