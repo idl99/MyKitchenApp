@@ -67,7 +67,6 @@ public class Product extends BaseObservable implements Serializable {
         return description;
     }
 
-    @Bindable
     public boolean isAvailable() {
         return available;
     }
