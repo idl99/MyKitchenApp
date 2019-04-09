@@ -14,7 +14,7 @@ import androidx.lifecycle.LiveData;
 
 public class ProductListViewModel extends AndroidViewModel {
 
-    private ProductRepository repository;
+    private final ProductRepository repository;
     private LiveData<List<Product>> products;
 
     public ProductListViewModel(@NonNull Application application) {

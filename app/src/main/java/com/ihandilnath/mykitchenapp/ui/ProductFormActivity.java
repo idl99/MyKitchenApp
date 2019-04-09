@@ -17,14 +17,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 public class ProductFormActivity extends AppCompatActivity {
 
-    ProductFormViewModel mViewModel;
-    ProductAction action;
-    ActivityProductFormBinding mDataBinding;
+    private ProductFormViewModel mViewModel;
+    private ProductAction action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_form);
+        ActivityProductFormBinding mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_form);
 
         if (mViewModel == null) {
             mViewModel = ViewModelProviders.of(this).get(ProductFormViewModel.class);

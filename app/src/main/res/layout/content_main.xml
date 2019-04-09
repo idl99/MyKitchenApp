@@ -16,7 +16,7 @@
         android:padding="48dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+            android:id="@+id/main_button_registerproduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="registerProduct"
@@ -24,7 +24,7 @@
             app:cornerRadius="24dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button2"
+            android:id="@+id/main_button_displayproducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="displayProducts"
@@ -32,7 +32,7 @@
             app:cornerRadius="24dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button3"
+            android:id="@+id/main_button_availability"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="checkAvailability"
@@ -40,7 +40,7 @@
             app:cornerRadius="24dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button4"
+            android:id="@+id/main_button_editproduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="editProduct"
@@ -48,7 +48,7 @@
             app:cornerRadius="24dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button5"
+            android:id="@+id/main_button_searchproducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="search"
@@ -56,7 +56,7 @@
             app:cornerRadius="24dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button6"
+            android:id="@+id/main_button_findrecipes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="findRecipes"

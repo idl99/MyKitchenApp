@@ -42,9 +42,7 @@ public class ProductSearchActivity extends AppCompatActivity {
         String query = editQuery.getText().toString().toLowerCase();
 
         List<String> filteredProductList = new ArrayList<>();
-        Iterator it = products.iterator();
-        while (it.hasNext()) {
-            Product product = ((Product) it.next());
+        for (Product product : products) {
             if (product.getName().toLowerCase().contains(query) || product.getDescription().toLowerCase().contains(query)) {
                 filteredProductList.add(product.getName());
             }

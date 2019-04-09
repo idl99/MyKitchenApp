@@ -11,8 +11,8 @@ import androidx.lifecycle.LiveData;
 
 public class ProductRepository {
 
-    private ProductDao mProductDao;
-    private LiveData<List<Product>> mProducts;
+    private final ProductDao mProductDao;
+    private final LiveData<List<Product>> mProducts;
 
     public ProductRepository(Application application) {
         ProductDatabase db = ProductDatabase.getDatabase(application);
@@ -38,7 +38,7 @@ public class ProductRepository {
 
 
     private static class insertAsyncTask extends AsyncTask<Product, Void, Void> {
-        private ProductDao mAsyncTaskDao;
+        private final ProductDao mAsyncTaskDao;
 
         insertAsyncTask(ProductDao dao) {
             mAsyncTaskDao = dao;
@@ -53,7 +53,7 @@ public class ProductRepository {
     }
 
     private static class updateAsyncTask extends AsyncTask<Product, Void, Void> {
-        private ProductDao mAsyncTaskDao;
+        private final ProductDao mAsyncTaskDao;
 
         updateAsyncTask(ProductDao dao) {
             mAsyncTaskDao = dao;

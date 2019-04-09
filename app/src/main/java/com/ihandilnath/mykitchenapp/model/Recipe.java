@@ -2,8 +2,8 @@ package com.ihandilnath.mykitchenapp.model;
 
 public class Recipe {
 
-    String name;
-    String url;
+    private String name;
+    private String url;
 
     public Recipe(String name, String url) {
         this.name = name;

@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 public class ProductFormViewModel extends AndroidViewModel {
 
-    private ProductRepository repository;
+    private final ProductRepository repository;
     private Product product;
 
     public ProductFormViewModel(Application application) {

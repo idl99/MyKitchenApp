@@ -24,11 +24,7 @@
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".ui.ProductFormActivity"
-            android:configChanges="orientation|screenSize"
-            android:parentActivityName=".ui.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ihandilnath.mykitchenapp.ui.MainActivity" />
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:name=".ui.MainActivity"

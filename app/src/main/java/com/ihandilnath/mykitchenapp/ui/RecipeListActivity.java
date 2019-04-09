@@ -76,7 +76,7 @@ public class RecipeListActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    public void initializeView(List<String> products) {
+    private void initializeView(List<String> products) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         Uri uri = new Uri.Builder().scheme("https")
@@ -109,7 +109,7 @@ public class RecipeListActivity extends AppCompatActivity {
 
     }
 
-    public List<Recipe> parseResponseAsRecipes(JSONObject response) {
+    private List<Recipe> parseResponseAsRecipes(JSONObject response) {
         final List<Recipe> recipes = new ArrayList<>();
         try {
             JSONArray jsonArray = response.getJSONArray("recipes");
@@ -125,7 +125,7 @@ public class RecipeListActivity extends AppCompatActivity {
         return recipes;
     }
 
-    public void populateRecipeList(final List<Recipe> recipes) {
+    private void populateRecipeList(final List<Recipe> recipes) {
         if (recipes.size() == 0) {
             new AlertDialog.Builder(this)
                     .setTitle("No recipes found")

@@ -144,11 +144,9 @@ public class ProductListActivity extends AppCompatActivity {
         onListAction();
     }
 
-    public void findRecipes() {
+    private void findRecipes() {
         ArrayList<String> productNames = new ArrayList<>();
-        for (Iterator it = ((CheckedProductAdapter) listView.getAdapter()).getCheckedProducts().iterator();
-             it.hasNext(); ) {
-            Product product = ((Product) it.next());
+        for (Product product : ((CheckedProductAdapter) listView.getAdapter()).getCheckedProducts()) {
             productNames.add(product.getName());
         }
         Intent intent = new Intent(this, RecipeListActivity.class);
@@ -158,9 +156,9 @@ public class ProductListActivity extends AppCompatActivity {
 
     private class SimpleProductAdapter extends BaseAdapter {
 
-        protected List<Product> products;
+        final List<Product> products;
 
-        public SimpleProductAdapter(List<Product> products) {
+        SimpleProductAdapter(List<Product> products) {
             super();
             this.products = products;
         }
@@ -196,9 +194,9 @@ public class ProductListActivity extends AppCompatActivity {
 
     private class CheckedProductAdapter extends SimpleProductAdapter {
 
-        private boolean disableCheckedItems;
+        private final boolean disableCheckedItems;
 
-        public CheckedProductAdapter(List<Product> products, boolean disableCheckedItems) {
+        CheckedProductAdapter(List<Product> products, boolean disableCheckedItems) {
             super(products);
             this.disableCheckedItems = disableCheckedItems;
         }
@@ -231,7 +229,7 @@ public class ProductListActivity extends AppCompatActivity {
             return view;
         }
 
-        public List<Product> getCheckedProducts() {
+        List<Product> getCheckedProducts() {
             List<Product> checkedProducts = new ArrayList<>();
             for (int i = 0; i < getCount(); i++) {
                 if (((CheckedTextView) listView.getChildAt(i)).isChecked())
@@ -240,7 +238,7 @@ public class ProductListActivity extends AppCompatActivity {
             return checkedProducts;
         }
 
-        public void uncheckAll() {
+        void uncheckAll() {
             if (listView.getChoiceMode() != AbsListView.CHOICE_MODE_MULTIPLE) {
                 listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
             }
