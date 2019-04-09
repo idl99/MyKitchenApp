@@ -1,8 +1,5 @@
 package com.ihandilnath.mykitchenapp.ui;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,6 +31,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class RecipeListActivity extends AppCompatActivity {
 
     private ListView listView;
@@ -48,9 +47,9 @@ public class RecipeListActivity extends AppCompatActivity {
 
         List<String> products = getIntent().getExtras().getStringArrayList("productNames");
 
-        if(isConnectedToInternet()){
+        if (isConnectedToInternet()) {
             initializeView(products);
-        }else{
+        } else {
             new AlertDialog.Builder(this)
                     .setTitle("No Internet Connectivity")
                     .setMessage("Please connect to a WiFi or Mobile Data network and try again")
@@ -72,12 +71,12 @@ public class RecipeListActivity extends AppCompatActivity {
 
     }
 
-    private boolean isConnectedToInternet(){
+    private boolean isConnectedToInternet() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 
-    public void initializeView(List<String> products){
+    public void initializeView(List<String> products) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         Uri uri = new Uri.Builder().scheme("https")
@@ -85,8 +84,8 @@ public class RecipeListActivity extends AppCompatActivity {
                 .appendPath("api")
                 .appendPath("search")
                 .appendQueryParameter("key", "d4d6d1af0d6d52dcf90a83a3fb37b513")
-                .appendQueryParameter("q", TextUtils.join(",",products).toLowerCase())
-                .appendQueryParameter("page","1")
+                .appendQueryParameter("q", TextUtils.join(",", products).toLowerCase())
+                .appendQueryParameter("page", "1")
                 .build();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, uri.toString(), null,
@@ -110,16 +109,14 @@ public class RecipeListActivity extends AppCompatActivity {
 
     }
 
-    public List<Recipe> parseResponseAsRecipes(JSONObject response){
+    public List<Recipe> parseResponseAsRecipes(JSONObject response) {
         final List<Recipe> recipes = new ArrayList<>();
         try {
             JSONArray jsonArray = response.getJSONArray("recipes");
-            for(int i =0; i< jsonArray.length(); i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String name = object.getString("title");
                 String url = object.getString("source_url");
-                Recipe recipe = new Recipe(name, url);
-                Log.d("MY_TAG", recipe.toString());
                 recipes.add(new Recipe(name, url));
             }
         } catch (JSONException e) {
@@ -128,8 +125,8 @@ public class RecipeListActivity extends AppCompatActivity {
         return recipes;
     }
 
-    public void populateRecipeList(final List<Recipe> recipes){
-        if(recipes.size() == 0){
+    public void populateRecipeList(final List<Recipe> recipes) {
+        if (recipes.size() == 0) {
             new AlertDialog.Builder(this)
                     .setTitle("No recipes found")
                     .setMessage("No recipes available containing these ingredients, try different\n" +
@@ -141,7 +138,7 @@ public class RecipeListActivity extends AppCompatActivity {
                         }
                     })
                     .show();
-        }else{
+        } else {
             listView.setAdapter(new ArrayAdapter<>(RecipeListActivity.this, android.R.layout.simple_list_item_1, recipes));
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

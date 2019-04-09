@@ -26,13 +26,13 @@ public class ProductFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_form);
 
-        if(mViewModel == null){
+        if (mViewModel == null) {
             mViewModel = ViewModelProviders.of(this).get(ProductFormViewModel.class);
         }
 
         action = (ProductAction) getIntent().getExtras().get("action");
 
-        if(action == ProductAction.EDIT_PRODUCT){
+        if (action == ProductAction.EDIT_PRODUCT) {
             mViewModel.setProduct((Product) getIntent().getExtras().get("product"));
             TextInputEditText tv = findViewById(R.id.productform_edit_name);
             tv.setFocusable(false);
@@ -46,7 +46,7 @@ public class ProductFormActivity extends AppCompatActivity {
     public void submit(View view) {
         mViewModel.submit();
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        if(action == ProductAction.REGISTER_PRODUCT){
+        if (action == ProductAction.REGISTER_PRODUCT) {
             alertDialogBuilder.setTitle("Registered Product")
                     .setMessage(String.format("Registered details of %s in the Product database. ", mViewModel.getName()))
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {

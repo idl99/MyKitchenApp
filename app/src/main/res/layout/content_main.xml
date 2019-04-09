@@ -12,49 +12,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="48dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="registerProduct"
             android:text="Register Products"
-            android:onClick="registerProduct" />
+            app:cornerRadius="24dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="displayProducts"
             android:text="Display Products"
-            android:onClick="displayProducts" />
+            app:cornerRadius="24dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="checkAvailability"
             android:text="Availability"
-            android:onClick="checkAvailability" />
+            app:cornerRadius="24dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="editProduct"
             android:text="Edit Products"
-            android:onClick="editProduct" />
+            app:cornerRadius="24dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search"
-            android:onClick="search" />
+            android:onClick="search"
+            android:text="Search Products"
+            app:cornerRadius="24dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipes"
-            android:onClick="findRecipes" />
+            android:onClick="findRecipes"
+            android:text="Find Recipes"
+            app:cornerRadius="24dp" />
 
     </LinearLayout>
 

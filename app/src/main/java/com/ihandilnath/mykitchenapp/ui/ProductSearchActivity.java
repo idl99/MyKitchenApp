@@ -1,8 +1,5 @@
 package com.ihandilnath.mykitchenapp.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,10 +11,11 @@ import com.ihandilnath.mykitchenapp.db.ProductRepository;
 import com.ihandilnath.mykitchenapp.model.Product;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 public class ProductSearchActivity extends AppCompatActivity {
 
@@ -43,11 +41,11 @@ public class ProductSearchActivity extends AppCompatActivity {
         TextInputEditText editQuery = findViewById(R.id.productsearch_edit_query);
         String query = editQuery.getText().toString().toLowerCase();
 
-        List <String> filteredProductList = new ArrayList<>();
+        List<String> filteredProductList = new ArrayList<>();
         Iterator it = products.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Product product = ((Product) it.next());
-            if (product.getName().toLowerCase().contains(query) || product.getDescription().toLowerCase().  contains(query)) {
+            if (product.getName().toLowerCase().contains(query) || product.getDescription().toLowerCase().contains(query)) {
                 filteredProductList.add(product.getName());
             }
         }

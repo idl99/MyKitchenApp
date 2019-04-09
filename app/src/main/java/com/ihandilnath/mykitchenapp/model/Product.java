@@ -52,28 +52,14 @@ public class Product extends BaseObservable implements Serializable {
         return name;
     }
 
-    @Bindable
-    public double getWeight() {
-        return weight;
-    }
-
-    @Bindable
-    public double getPrice() {
-        return price;
-    }
-
-    @Bindable
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
     public void setName(String name) {
         this.name = name;
         notifyPropertyChanged(BR.name);
+    }
+
+    @Bindable
+    public double getWeight() {
+        return weight;
     }
 
     public void setWeight(double weight) {
@@ -81,14 +67,28 @@ public class Product extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR.weight);
     }
 
+    @Bindable
+    public double getPrice() {
+        return price;
+    }
+
     public void setPrice(double price) {
         this.price = price;
         notifyPropertyChanged(BR.price);
     }
 
+    @Bindable
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
         notifyPropertyChanged(BR.description);
+    }
+
+    public boolean isAvailable() {
+        return available;
     }
 
     public void setAvailable(boolean available) {

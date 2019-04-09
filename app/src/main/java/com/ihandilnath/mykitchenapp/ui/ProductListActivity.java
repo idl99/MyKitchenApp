@@ -1,11 +1,5 @@
 package com.ihandilnath.mykitchenapp.ui;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +20,12 @@ import com.ihandilnath.mykitchenapp.viewmodel.ProductListViewModel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 
 public class ProductListActivity extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class ProductListActivity extends AppCompatActivity {
         listView = findViewById(R.id.productlist_list_view);
 
         LiveData<List<Product>> data;
-        switch (action){
+        switch (action) {
             case EDIT_AVAILABILITY:
             case FIND_RECIPES:
                 data = viewmodel.getAvailableProducts();
@@ -64,10 +64,10 @@ public class ProductListActivity extends AppCompatActivity {
             @Override
             public void onChanged(final List<Product> products) {
 
-                switch (action){
+                switch (action) {
 
                     case ADD_TO_KITCHEN:
-                        listView.setAdapter(new CheckedProductAdapter(products,true));
+                        listView.setAdapter(new CheckedProductAdapter(products, true));
                         break;
 
                     case EDIT_AVAILABILITY:
@@ -77,7 +77,7 @@ public class ProductListActivity extends AppCompatActivity {
                         break;
 
                     case EDIT_PRODUCT:
-                        ((ViewGroup)(button.getParent())).removeView(button);
+                        ((ViewGroup) (button.getParent())).removeView(button);
                         listView.setAdapter(new SimpleProductAdapter(products));
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
@@ -121,7 +121,7 @@ public class ProductListActivity extends AppCompatActivity {
                     }
                 });
 
-        switch (action){
+        switch (action) {
 
             case ADD_TO_KITCHEN:
                 alertDialogBuilder.setTitle("Added Items to Kitchen")
@@ -144,10 +144,10 @@ public class ProductListActivity extends AppCompatActivity {
         onListAction();
     }
 
-    public void findRecipes(){
+    public void findRecipes() {
         ArrayList<String> productNames = new ArrayList<>();
-        for(Iterator it = ((CheckedProductAdapter) listView.getAdapter()).getCheckedProducts().iterator();
-            it.hasNext();){
+        for (Iterator it = ((CheckedProductAdapter) listView.getAdapter()).getCheckedProducts().iterator();
+             it.hasNext(); ) {
             Product product = ((Product) it.next());
             productNames.add(product.getName());
         }
@@ -156,7 +156,7 @@ public class ProductListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private class SimpleProductAdapter extends BaseAdapter{
+    private class SimpleProductAdapter extends BaseAdapter {
 
         protected List<Product> products;
 
@@ -188,13 +188,13 @@ public class ProductListActivity extends AppCompatActivity {
             }
 
             TextView tv = view.findViewById(android.R.id.text1);
-            tv.setText(((Product)getItem(i)).getName());
+            tv.setText(((Product) getItem(i)).getName());
 
             return view;
         }
     }
 
-    private class CheckedProductAdapter extends SimpleProductAdapter{
+    private class CheckedProductAdapter extends SimpleProductAdapter {
 
         private boolean disableCheckedItems;
 
@@ -211,14 +211,14 @@ public class ProductListActivity extends AppCompatActivity {
                         viewGroup, false);
             }
 
-            final Product product = ((Product)getItem(i));
+            final Product product = ((Product) getItem(i));
             final CheckedTextView ctv = ((CheckedTextView) view);
             ctv.setText(product.getName());
             ctv.setChecked(product.isAvailable());
 
-            if(disableCheckedItems && ctv.isChecked()){
+            if (disableCheckedItems && ctv.isChecked()) {
                 ctv.setClickable(false);
-            }else{
+            } else {
                 ctv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -231,20 +231,20 @@ public class ProductListActivity extends AppCompatActivity {
             return view;
         }
 
-        public List<Product> getCheckedProducts(){
+        public List<Product> getCheckedProducts() {
             List<Product> checkedProducts = new ArrayList<>();
-            for(int i=0; i<getCount(); i++){
-                if(((CheckedTextView) listView.getChildAt(i)).isChecked())
+            for (int i = 0; i < getCount(); i++) {
+                if (((CheckedTextView) listView.getChildAt(i)).isChecked())
                     checkedProducts.add(products.get(i));
             }
             return checkedProducts;
         }
 
         public void uncheckAll() {
-            if(listView.getChoiceMode() != AbsListView.CHOICE_MODE_MULTIPLE){
+            if (listView.getChoiceMode() != AbsListView.CHOICE_MODE_MULTIPLE) {
                 listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
             }
-            for(int i=0; i<getCount(); i++){
+            for (int i = 0; i < getCount(); i++) {
                 listView.setItemChecked(i, false);
             }
         }

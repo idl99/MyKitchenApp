@@ -2,13 +2,12 @@ package com.ihandilnath.mykitchenapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.ihandilnath.mykitchenapp.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,7 +1,5 @@
 package com.ihandilnath.mykitchenapp.model;
 
-import androidx.annotation.NonNull;
-
 public class Recipe {
 
     String name;
@@ -16,12 +14,12 @@ public class Recipe {
         return name;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public void setUrl(String url) {

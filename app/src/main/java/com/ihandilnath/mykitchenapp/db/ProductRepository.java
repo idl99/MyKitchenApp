@@ -24,15 +24,15 @@ public class ProductRepository {
         return mProducts;
     }
 
-    public LiveData<List<Product>> getAvailableProducts(){
+    public LiveData<List<Product>> getAvailableProducts() {
         return mProductDao.getAvailableProducts();
     }
 
-    public void insert (Product product) {
+    public void insert(Product product) {
         new insertAsyncTask(mProductDao).execute(product);
     }
 
-    public void update(Product product){
+    public void update(Product product) {
         new updateAsyncTask(mProductDao).execute(product);
     }
 

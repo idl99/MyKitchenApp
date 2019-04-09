@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="viewmodel" type="com.ihandilnath.mykitchenapp.viewmodel.ProductFormViewModel" />
+
+        <variable
+            name="viewmodel"
+            type="com.ihandilnath.mykitchenapp.viewmodel.ProductFormViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,73 +23,73 @@
             android:padding="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:hint="Name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/productform_edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="@{viewmodel.getName}"
-                    android:onTextChanged="@{viewmodel::setName}"/>
+                    android:onTextChanged="@{viewmodel::setName}"
+                    android:text="@{viewmodel.getName}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Weight"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
-                    android:text="@{viewmodel.getWeight}"
-                    android:onTextChanged="@{viewmodel::setWeight}"/>
+                    android:onTextChanged="@{viewmodel::setWeight}"
+                    android:text="@{viewmodel.getWeight}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Price"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:hint="Price">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
-                    android:text="@{viewmodel.getPrice}"
-                    android:onTextChanged="@{viewmodel::setPrice}"/>
+                    android:onTextChanged="@{viewmodel::setPrice}"
+                    android:text="@{viewmodel.getPrice}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:hint="Description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:maxLines="5"
-                    android:text="@{viewmodel.getDescription}"
-                    android:onTextChanged="@{viewmodel::setDescription}"/>
+                    android:onTextChanged="@{viewmodel::setDescription}"
+                    android:text="@{viewmodel.getDescription}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Save"
-                android:onClick="submit">
+                android:onClick="submit"
+                android:text="Save">
 
             </com.google.android.material.button.MaterialButton>
 
