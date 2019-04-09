@@ -43,34 +43,41 @@ public class ProductFormActivity extends AppCompatActivity {
     }
 
     public void submit(View view) {
-        mViewModel.submit();
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        if (action == ProductAction.REGISTER_PRODUCT) {
-            alertDialogBuilder.setTitle("Registered Product")
-                    .setMessage(String.format("Registered details of %s in the Product database. ", mViewModel.getName()))
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ProductFormActivity.this.finish();
-                        }
-                    })
-                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ProductFormActivity.this.finish();
-                        }
-                    });
-        } else {
-            alertDialogBuilder.setTitle("Updated Product")
-                    .setMessage(String.format("Updated details of %s in the Product database.", mViewModel.getName()))
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ProductFormActivity.this.finish();
-                        }
-                    });
+        Product product = mViewModel.getProduct();
+        if(product.getName().equals("")){
+            new AlertDialog.Builder(this).
+                setTitle("Name must not be empty")
+                .setMessage("Please provide a name for the product.").show();
+        }else{
+                mViewModel.submit();
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                if (action == ProductAction.REGISTER_PRODUCT) {
+                    alertDialogBuilder.setTitle("Registered Product")
+                            .setMessage(String.format("Registered details of %s in the Product database. ", mViewModel.getName()))
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ProductFormActivity.this.finish();
+                                }
+                            })
+                            .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ProductFormActivity.this.finish();
+                                }
+                            });
+                } else {
+                    alertDialogBuilder.setTitle("Updated Product")
+                            .setMessage(String.format("Updated details of %s in the Product database.", mViewModel.getName()))
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ProductFormActivity.this.finish();
+                                }
+                            });
+                }
+                alertDialogBuilder.show();
         }
-        alertDialogBuilder.show();
     }
 
 }
