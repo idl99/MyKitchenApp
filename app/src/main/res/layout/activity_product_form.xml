@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save"
-                android:onClick="@{viewmodel::submit}">
+                android:onClick="submit">
 
             </com.google.android.material.button.MaterialButton>
 

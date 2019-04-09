@@ -69,7 +69,7 @@ public class ProductFormViewModel extends AndroidViewModel{
         product.setDescription(s.toString());
     }
 
-    public void submit(View view) {
+    public void submit() {
         repository.insert(product);
     }
 
