@@ -96,7 +96,7 @@ public class RecipeListActivity extends AppCompatActivity {
                 .authority("www.food2fork.com")
                 .appendPath("api")
                 .appendPath("search")
-                .appendQueryParameter("key", "d4d6d1af0d6d52dcf90a83a3fb37b513")
+                .appendQueryParameter("key", "<INSERT FOOD2FORK API KEY HERE>")
                 .appendQueryParameter("q", TextUtils.join(",", products).toLowerCase())
                 .appendQueryParameter("page", "1")
                 .build();
